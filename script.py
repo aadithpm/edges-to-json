@@ -52,6 +52,7 @@ def make_json_data(in_file, out_file):
         id = int(entry[4])
         if id not in nodes:
             nodes.append(id)
+    if log: print("[json] Stored {} nodes".format(len(nodes)))
 
     for node in nodes:
         temp_dict = {}
@@ -60,6 +61,7 @@ def make_json_data(in_file, out_file):
 
     for entry in data_list:
         data['links'].append(make_edge_data(entry))
+    if log: print("[json] Stored {} edges".format(len(data['links'])))
 
     f = open(out_file, "w")
     json.dump(data, f)
@@ -162,13 +164,18 @@ writer = csv.writer(out_file)
 writer.writerows(out_list)
 out_file.flush()
 out_file.close()
+if log: print("[csv] Created complete updated dataset")
 
 # Saving test dataset
 writer = csv.writer(out_test_file)
 writer.writerows(out_list[:100])
 out_test_file.flush()
 out_test_file.close()
+if log: print("[csv] Created test dataset")
 
 # Making JSON files
 make_json_data(csv_testfilename, json_testfilename)
+if log: print("[json] Created complete JSON file")
+
 make_json_data(csv_outfilename, json_filename)
+if log: print("[json] Created test JSON file")
