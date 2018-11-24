@@ -27,7 +27,7 @@ json_filename = "Delhi.json"
 json_testfilename = "Delhi_Test.json"
 
 log = 1                         # Set this to 1 for logs else 0
-test_data_size = 100            # Change this for test dataset size
+test_data_size = 800            # Change this for test dataset size
 start_time = time.time()        # For timing the script
 
 def make_json_data(in_file, out_file):
@@ -63,7 +63,7 @@ def make_json_data(in_file, out_file):
 
     if log: print("[json] Stored {} nodes".format(len(nodes)))
 
-    nodes = list(set(nodes))
+    nodes = sorted(list(set(nodes)))
     for node in nodes:
         temp_dict = {}
         temp_dict['id'] = node
@@ -178,7 +178,7 @@ if log: print("[csv] Created complete updated dataset")
 
 # Saving test dataset
 writer = csv.writer(out_test_file)
-writer.writerows(out_list[:100])
+writer.writerows(out_list[:test_data_size])
 out_test_file.flush()
 out_test_file.close()
 if log: print("[csv] Created test dataset")
@@ -195,11 +195,12 @@ if log: print("[json] Created test JSON file")
 G = nx.node_link_graph(json.load(open(json_testfilename, "r")))
 g_pos = nx.spring_layout(G)
 g_edge_labels = nx.get_edge_attributes(G, 'class')
-nx.draw(G, pos = g_pos)
-nx.draw_networkx_edge_labels(G, pos = g_pos, edge_labels = g_edge_labels, font_size = 8)
-plt.show()
-if log: print("[networkx] Generated graph with {} nodes and {} edges".format(len(G.nodes()), len(G.edges())))
+nx.draw(G, pos = g_pos, node_size = 17)
+# nx.draw_networkx_edge_labels(G, pos = g_pos, edge_labels = g_edge_labels, font_size = 7)
 
 end_time = time.time()
 final_time = end_time - start_time
 if log: print("[debug] Runtime: %.2f seconds" % final_time)
+plt.show()
+if log: print("[networkx] Generated graph with {} nodes and {} edges".format(len(G.nodes()), len(G.edges())))
+
