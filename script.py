@@ -10,12 +10,13 @@ I don't use any code from their tool but this project has been made possible tha
 """
 
 # Fiona for reading shape files, nx for testing the graph, CSV for reading and writing CSV files
-# JSON for dealing with JSON files, time for timing script
+# JSON for dealing with JSON files, time for timing script, matplot for the networkx graph
 import fiona
 import networkx as nx
 import csv
 import json
 import time
+import matplotlib.pyplot as plt
 
 # Filenames; change here for different data
 shp_filename = "Delhi_Links.shp"
@@ -196,6 +197,7 @@ g_pos = nx.spring_layout(G)
 g_edge_labels = nx.get_edge_attributes(G, 'class')
 nx.draw(G, pos = g_pos)
 nx.draw_networkx_edge_labels(G, pos = g_pos, edge_labels = g_edge_labels, font_size = 8)
+plt.show()
 if log: print("[networkx] Generated graph with {} nodes and {} edges".format(len(G.nodes()), len(G.edges())))
 
 end_time = time.time()
