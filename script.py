@@ -78,7 +78,7 @@ def make_json_data(in_file, out_file):
         temp_dict['length'] = float(entry[5])
         temp_dict['class'] = entry[6]
         temp_dict['type'] = entry[7]
-        test_data['links'].append(temp_dict)
+        data['links'].append(temp_dict)
 
     f = open(out_file, "w")
     json.dump(data, f)
@@ -161,45 +161,6 @@ writer.writerows(out_list)
 writer = csv.writer(out_test_file)
 writer.writerows(out_list[:100])
 
-#
-
-data = {}
-data['directed'] = True
-data['multigraph'] = False
-data['graph'] = {}
-data['nodes'] = []
-data['links'] = []
-
-test_data = data
-
-reader = csv.reader(open(csv_testfilename, 'r'))
-next(reader)
-
-for entry in reader:
-    if entry:
-        test_data_list.append(entry)
-
-test_nodes = []
-for entry in test_data_list:
-    id = int(entry[4])
-    if id not in test_nodes:
-        test_nodes.append(id)
-
-for node in test_nodes:
-    temp_dict = {}
-    temp_dict['id'] = node
-    test_data['nodes'].append(temp_dict)
-
-for entry in test_data_list:
-    temp_dict = {}
-    temp_dict['id'] = int(entry[4])
-    temp_dict['xcoord'] = float(entry[0])
-    temp_dict['ycoord'] = float(entry[1])
-    temp_dict['source'] = int(entry[2])
-    temp_dict['target'] = int(entry[3])
-    temp_dict['length'] = float(entry[5])
-    temp_dict['class'] = entry[6]
-    temp_dict['type'] = entry[7]
-    test_data['links'].append(temp_dict)
-
-json.dump(test_data, json_testfilename)
+# Making JSON files
+make_json_data(csv_testfilename, json_testfilename)
+make_json_data(csv_outfilename, json_filename)
