@@ -10,11 +10,12 @@ I don't use any code from their tool but this project has been made possible tha
 """
 
 # Fiona for reading shape files, nx for testing the graph, CSV for reading and writing CSV files
-# JSON for dealing with JSON files
+# JSON for dealing with JSON files, time for timing script
 import fiona
 import networkx as nx
 import csv
 import json
+import time
 
 # Filenames; change here for different data
 shp_filename = "Delhi_Links.shp"
@@ -24,9 +25,9 @@ csv_testfilename = "Delhi_Edgelist_Test.csv"
 json_filename = "Delhi.json"
 json_testfilename = "Delhi_Test.json"
 
-log = 1                 # Set this to 1 for logs else 0
-test_data_size = 100    # Change this for test dataset size
-
+log = 1                         # Set this to 1 for logs else 0
+test_data_size = 100            # Change this for test dataset size
+start_time = time.time()        # For timing the script
 
 def make_json_data(in_file, out_file):
     """
@@ -179,3 +180,6 @@ if log: print("[json] Created complete JSON file")
 
 make_json_data(csv_outfilename, json_filename)
 if log: print("[json] Created test JSON file")
+
+end_time = time.time()
+if log: print("[debug] Runtime: %.2f seconds" % end_time - start_time)
