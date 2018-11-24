@@ -81,7 +81,7 @@ def make_edge_data(entry):
     Takes an input of a list with data elements and builds a JSON entry with appropriate structure for using in D3 and networkx.
     """
     temp_dict = {}
-    temp_dict['id'] = int(entry[4])
+    temp_dict['eid'] = int(entry[4])
     temp_dict['xcoord'] = float(entry[0])
     temp_dict['ycoord'] = float(entry[1])
     temp_dict['source'] = int(entry[2])
@@ -186,8 +186,17 @@ if log: print("[csv] Created test dataset")
 make_json_data(csv_testfilename, json_testfilename)
 if log: print("[json] Created test JSON file")
 
-make_json_data(csv_outfilename, json_filename)
-if log: print("[json] Created complete JSON file")
+#make_json_data(csv_outfilename, json_filename)
+#if log: print("[json] Created complete JSON file")
+
+# Loading data from JSON into a graph and visualizing
+
+G = nx.node_link_data(json.load(open(json_testfilename, "r")))
+g_pos = nx.spring_layout(G)
+g_edge_labels = nx.get_edge_attributes(G, 'class')
+nx.draw(G, pos = g_pos)
+nx.draw_networkx_edge_labels(G, pos = g_pos, edge_labels = g_edge_labels, font_size = 8)
+if log: print("[networkx] Generated graph with {} nodes and {} edges".format(len(G.nodes()), len(G.edges())))
 
 end_time = time.time()
 final_time = end_time - start_time
