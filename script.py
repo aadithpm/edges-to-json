@@ -160,10 +160,14 @@ if log: print("[csv] Read and updated {} rows from datafile '{}'".format(len(out
 # Saving updated dataset 
 writer = csv.writer(out_file)
 writer.writerows(out_list)
- 
+out_file.flush()
+out_file.close()
+
 # Saving test dataset
 writer = csv.writer(out_test_file)
 writer.writerows(out_list[:100])
+out_test_file.flush()
+out_test_file.close()
 
 # Making JSON files
 make_json_data(csv_testfilename, json_testfilename)
