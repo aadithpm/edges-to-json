@@ -69,26 +69,27 @@ def make_json_data(in_file, out_file):
         data['nodes'].append(temp_dict)
 
     for entry in data_list:
-        temp_dict = {}
-        temp_dict['id'] = int(entry[4])
-        temp_dict['xcoord'] = float(entry[0])
-        temp_dict['ycoord'] = float(entry[1])
-        temp_dict['source'] = int(entry[2])
-        temp_dict['target'] = int(entry[3])
-        temp_dict['length'] = float(entry[5])
-        temp_dict['class'] = entry[6]
-        temp_dict['type'] = entry[7]
-        data['links'].append(temp_dict)
+        data['links'].append(make_edge_data(entry))
 
     f = open(out_file, "w")
     json.dump(data, f)
 
 
-def make_edge_data(edges):
+def make_edge_data(entry):
     """
     Takes an input of a list with data elements and builds a JSON entry with appropriate structure for using in D3 and networkx.
     """
-    pass
+    temp_dict = {}
+    temp_dict['id'] = int(entry[4])
+    temp_dict['xcoord'] = float(entry[0])
+    temp_dict['ycoord'] = float(entry[1])
+    temp_dict['source'] = int(entry[2])
+    temp_dict['target'] = int(entry[3])
+    temp_dict['length'] = float(entry[5])
+    temp_dict['class'] = entry[6]
+    temp_dict['type'] = entry[7]
+    
+    return temp_dict
 
 def build_road_class(shp_list):
     """
