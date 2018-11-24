@@ -27,16 +27,6 @@ json_testfilename = "Delhi_Test.json"
 log = 1                 # Set this to 1 for logs else 0
 test_data_size = 100    # Change this for test dataset size
 
-#
-shp_file = fiona.open(shp_filename)
-csv_file = csv.reader(open(csv_infilename, "r"))
-out_file = open(csv_outfilename, "w")
-out_test_file = open(csv_testfilename, "w")
-#
-dict_roadtypes = {}
-dict_roadconst = {}
-out_list = []
-test_data_list = []
 
 def make_json_data(in_file, out_file):
     """
@@ -122,6 +112,19 @@ def build_road_type(shp_list):
                 dict_roadconst[entry['properties']['OBJECTID']] = "standard"
     if log: print("[debug] Read {} edges for road type".format(len(dict_roadconst)))
     return dict_roadconst
+
+
+#
+shp_file = fiona.open(shp_filename)
+csv_file = csv.reader(open(csv_infilename, "r"))
+out_file = open(csv_outfilename, "w")
+out_test_file = open(csv_testfilename, "w")
+
+#
+dict_roadtypes = {}
+dict_roadconst = {}
+out_list = []
+test_data_list = []
 
 # Convert file contents from iterator to list for easy access
 shp_list = list(shp_file)
