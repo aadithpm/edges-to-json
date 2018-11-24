@@ -176,10 +176,10 @@ if log: print("[csv] Created test dataset")
 
 # Making JSON files
 make_json_data(csv_testfilename, json_testfilename)
-if log: print("[json] Created complete JSON file")
+if log: print("[json] Created test JSON file")
 
 make_json_data(csv_outfilename, json_filename)
-if log: print("[json] Created test JSON file")
+if log: print("[json] Created complete JSON file")
 
 end_time = time.time()
 if log: print("[debug] Runtime: %.2f seconds" % end_time - start_time)
