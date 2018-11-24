@@ -191,7 +191,7 @@ if log: print("[json] Created test JSON file")
 
 # Loading data from JSON into a graph and visualizing
 
-G = nx.node_link_data(json.load(open(json_testfilename, "r")))
+G = nx.node_link_graph(json.load(open(json_testfilename, "r")))
 g_pos = nx.spring_layout(G)
 g_edge_labels = nx.get_edge_attributes(G, 'class')
 nx.draw(G, pos = g_pos)
