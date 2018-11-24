@@ -53,8 +53,16 @@ def make_json_data(in_file, out_file):
         id = int(entry[4])
         if id not in nodes:
             nodes.append(id)
+        id = int(entry[2])
+        if id not in nodes:
+            nodes.append(id)
+        id = int(entry[3])
+        if id not in nodes:
+            nodes.append(id)
+
     if log: print("[json] Stored {} nodes".format(len(nodes)))
 
+    nodes = list(set(nodes))
     for node in nodes:
         temp_dict = {}
         temp_dict['id'] = node
@@ -182,4 +190,5 @@ make_json_data(csv_outfilename, json_filename)
 if log: print("[json] Created complete JSON file")
 
 end_time = time.time()
-if log: print("[debug] Runtime: %.2f seconds" % end_time - start_time)
+final_time = end_time - start_time
+if log: print("[debug] Runtime: %.2f seconds" % final_time)
