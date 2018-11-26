@@ -51,9 +51,6 @@ def make_json_data(in_file, out_file):
 
     nodes = []
     for entry in data_list:
-        id = int(entry[4])
-        if id not in nodes:
-            nodes.append(id)
         id = int(entry[2])
         if id not in nodes:
             nodes.append(id)
@@ -192,15 +189,19 @@ if log: print("[json] Created test JSON file")
 
 # Loading data from JSON into a graph and visualizing
 
+
 G = nx.node_link_graph(json.load(open(json_testfilename, "r")))
+
+"""
 g_pos = nx.spring_layout(G)
 g_edge_labels = nx.get_edge_attributes(G, 'class')
 nx.draw(G, pos = g_pos, node_size = 17)
-# nx.draw_networkx_edge_labels(G, pos = g_pos, edge_labels = g_edge_labels, font_size = 7)
+nx.draw_networkx_edge_labels(G, pos = g_pos, edge_labels = g_edge_labels, font_size = 7)
+"""
 
 end_time = time.time()
 final_time = end_time - start_time
 if log: print("[debug] Runtime: %.2f seconds" % final_time)
-plt.show()
+#plt.show()
 if log: print("[networkx] Generated graph with {} nodes and {} edges".format(len(G.nodes()), len(G.edges())))
 
