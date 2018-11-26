@@ -51,6 +51,9 @@ def make_json_data(in_file, out_file):
 
     nodes = []
     for entry in data_list:
+        id = int(entry[4])
+        if id not in nodes:
+            nodes.append(id)
         id = int(entry[2])
         if id not in nodes:
             nodes.append(id)
