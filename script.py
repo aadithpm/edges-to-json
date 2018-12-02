@@ -133,8 +133,8 @@ def build_road_name(shp_list):
             if entry['properties']['name'] != "" and "?" not in entry['properties']['name']:
                 dict_roadnames[entry['properties']['OBJECTID']] = entry['properties']['name']
             else:
-                dict_roadnames[entry['propperties']['OBJECTID']] = "NULL"
-                
+                dict_roadnames[entry['properties']['OBJECTID']] = "NULL"
+
     if log: print("[debug] Read {} edges for road names".format(len(dict_roadnames)))
     return dict_roadnames
 
