@@ -87,6 +87,7 @@ def make_edge_data(entry):
     temp_dict['length'] = float(entry[5])
     temp_dict['class'] = entry[6]
     temp_dict['type'] = entry[7]
+    temp_dict['name'] = entry[8]
     
     return temp_dict
 
