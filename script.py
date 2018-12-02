@@ -27,7 +27,7 @@ json_filenames = ["json/Delhi.json", "json/Houston.json", "json/Chengdu.json"]
 json_testfilenames = ["json_test/Delhi_Test.json", "json_test/Houston_Test.json", "json_test/Chengdu_Test.json"]
 
 log = 1                         # Set this to 1 for logs else 0
-test_data_size = 2500           # Change this for test dataset size
+test_data_size = 2500           # Change this and comment input line (in main) for setting test dataset size
 start_time = time.time()        # For timing the script
 
 def make_json_data(in_file, out_file):
@@ -122,6 +122,17 @@ def build_road_type(shp_list):
     if log: print("[debug] Read {} edges for road type".format(len(dict_roadconst)))
     return dict_roadconst
 
+def build_road_name(shp_list):
+    """
+    Takes an input of data in a list and returns a dictionary with values of street name for each unique entry
+    """
+    dict_roadtypes = {}
+    for entry in shp_list:
+        if entry['properties']['OBJECTID'] not in dict_roadtypes:
+            if entry['properties']['name'] != "" and "?" not in entry['properties']['name']:
+                dict_roadtypes[entry['properties']['OBJECTID']] = entry['properties']['name']
+    if log: print("[debug] Read {} edges for road classification".format(len(dict_roadtypes)))
+    return dict_roadtypes
 
 def run_script(choice):
     """
@@ -135,7 +146,7 @@ def run_script(choice):
     json_testfilename = json_testfilenames[files_idx]
     json_filename = json_filenames[files_idx]
 
-    print("Outputs:\nUpdated CSV: {}\nJSON test file: {}\nFull JSON file: {}\n".
+    print("\n\nOutputs:\nUpdated CSV: {}\nJSON test file: {}\nFull JSON file: {}\n".
     format(csv_outfilename, json_testfilename, json_filename))
 
     #
@@ -148,7 +159,6 @@ def run_script(choice):
     dict_roadtypes = {}
     dict_roadconst = {}
     out_list = []
-    test_data_list = []
 
     # Convert file contents from iterator to list for easy access
     shp_list = list(shp_file)
@@ -226,6 +236,8 @@ while 1:
     choice = input()
     try:
         choice = int(choice)
+        print("--- Enter edges limit for test dataset (1000 recommended):")
+        test_data_size = int(input())
         if choice in range(1, 4):
             run_script(choice)
             break
