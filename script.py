@@ -19,8 +19,8 @@ import time
 import matplotlib.pyplot as plt
 
 # Filenames; change here for different data
-shp_filenames = ["Delhi_Links.shp", "Houston_Links.shp", "Seoul_Links.shp"]
-csv_infilenames = ["Delhi_Edgelist.csv", "Houston_Edgelist.csv", "Seoul_Edgelist.csv"]
+shp_filenames = ["Delhi/Delhi_Links.shp", "Houston/Houston_Links.shp", "Seoul/Seoul_Links.shp"]
+csv_infilenames = ["Delhi/Delhi_Edgelist.csv", "Houston/Houston_Edgelist.csv", "Seoul/Seoul_Edgelist.csv"]
 csv_outfilenames = ["out_csv/Delhi_Edgelist_Updated.csv", "out_csv/Houston_Edgelist_Updated.csv", "out_csv/Seoul_Edgelist_Updated.csv"]
 csv_testfilenames = ["test_csv/Delhi_Edgelist_Test.csv", "test_csv/Houston_Edgelist_Test.csv", "test_csv/Seoul_Edgelist_Updated.csv"]
 json_filenames = ["json/Delhi.json", "json/Houston.json", "json/Seoul.json"]
@@ -124,106 +124,113 @@ def build_road_type(shp_list):
 
 
 print("--- JSON and CSV file generator for the Force Directed Road Network project ---")
-print("--- Choose datafile: 1. Delhi | 2. Houston | 3. Seoul")
+print("--- Choose datafile: 1. Delhi | 2. Houston | 3. Seoul | 4. All")
 while 1:
     choice = input()
     try:
-        choice = int(input)
+        choice = int(choice)
         if choice in range(1, 4):
+            run_script(choice)
+            break
+        elif choice == 4:
+            for i in range(1, 4):
+                run_script(i)
             break
         else:
-            print("Invalid --- Choose datafile: 1. Delhi | 2. Houston | 3. Seoul")
-    except:
-        print("Invalid --- Choose datafile: 1. Delhi | 2. Houston | 3. Seoul")
+            print("(I) Invalid --- Choose datafile: 1. Delhi | 2. Houston | 3. Seoul")
+    except Exception as e:
+        print(e)
+        print("(E) Invalid --- Choose datafile: 1. Delhi | 2. Houston | 3. Seoul")
 
-files_idx = choice - 1
-shp_filename = shp_filenames[files_idx]
-csv_infilename = csv_infilenames[files_idx]
-csv_outfilename = csv_outfilenames[files_idx]
-csv_testfilename = csv_testfilenames[files_idx]
-json_testfilename = json_testfilenames[files_idx]
-json_filename = json_filenames[files_idx]
+def run_script(choice):
+    files_idx = choice - 1
+    shp_filename = shp_filenames[files_idx]
+    csv_infilename = csv_infilenames[files_idx]
+    csv_outfilename = csv_outfilenames[files_idx]
+    csv_testfilename = csv_testfilenames[files_idx]
+    json_testfilename = json_testfilenames[files_idx]
+    json_filename = json_filenames[files_idx]
 
-print("Outputs:\nUpdated CSV: {}\nJSON test file: {}\n Full JSON file: {}\n".
-format(csv_outfilename, json_testfilename, json_filename))
+    print("Outputs:\nUpdated CSV: {}\nJSON test file: {}\nFull JSON file: {}\n".
+    format(csv_outfilename, json_testfilename, json_filename))
 
-#
-shp_file = fiona.open(shp_filename)
-csv_file = csv.reader(open(csv_infilename, "r"))
-out_file = open(csv_outfilename, "w")
-out_test_file = open(csv_testfilename, "w")
+    #
+    shp_file = fiona.open(shp_filename)
+    csv_file = csv.reader(open(csv_infilename, "r"))
+    out_file = open(csv_outfilename, "w")
+    out_test_file = open(csv_testfilename, "w")
 
-#
-dict_roadtypes = {}
-dict_roadconst = {}
-out_list = []
-test_data_list = []
+    #
+    dict_roadtypes = {}
+    dict_roadconst = {}
+    out_list = []
+    test_data_list = []
 
-# Convert file contents from iterator to list for easy access
-shp_list = list(shp_file)
-if log: print("[fiona] Read {} entries from shape file".format(len(shp_list)))
+    # Convert file contents from iterator to list for easy access
+    shp_list = list(shp_file)
+    if log: print("[fiona] Read {} entries from shape file".format(len(shp_list)))
 
-# Can optimise with same function, but it's preferable to store these values in separate dictionaries
-#
-# Storing road classifications
-dict_roadtypes = build_road_class(shp_list)
-# Storing road types
-dict_roadconst = build_road_type(shp_list)
+    # Can optimise with same function, but it's preferable to store these values in separate dictionaries
+    #
+    # Storing road classifications
+    dict_roadtypes = build_road_class(shp_list)
+    # Storing road types
+    dict_roadconst = build_road_type(shp_list)
 
-# Adding headers
-out_list.append(next(csv_file))
-out_list[0].append('CLASS')
-out_list[0].append('TYPE')
+    # Adding headers
+    out_list.append(next(csv_file))
+    out_list[0].append('CLASS')
+    out_list[0].append('TYPE')
 
-# Building list for new dataset
-for row in csv_file:
-    object_id = int(row[4])     #Index depends on dataset schema
-    out_entry = []
-    out_entry.extend(row)
+    # Building list for new dataset
+    for row in csv_file:
+        object_id = int(row[4])     #Index depends on dataset schema
+        out_entry = []
+        out_entry.extend(row)
 
-    if object_id in dict_roadtypes:
-        out_entry.append(dict_roadtypes[object_id])
+        if object_id in dict_roadtypes:
+            out_entry.append(dict_roadtypes[object_id])
 
-    if object_id in dict_roadconst:
-        out_entry.append(dict_roadconst[object_id])
+        if object_id in dict_roadconst:
+            out_entry.append(dict_roadconst[object_id])
 
-    out_list.append(out_entry)
-if log: print("[csv] Read and updated {} rows from datafile '{}'".format(len(out_list), csv_infilename))  
+        out_list.append(out_entry)
+    if log: print("[csv] Read and updated {} rows from datafile '{}'".format(len(out_list), csv_infilename))  
 
-# Saving updated dataset 
-writer = csv.writer(out_file)
-writer.writerows(out_list)
-out_file.flush()
-out_file.close()
-if log: print("[csv] Created complete updated dataset")
+    # Saving updated dataset 
+    writer = csv.writer(out_file)
+    writer.writerows(out_list)
+    out_file.flush()
+    out_file.close()
+    if log: print("[csv] Created complete updated dataset")
 
-# Saving test dataset
-writer = csv.writer(out_test_file)
-writer.writerows(out_list[:test_data_size])
-out_test_file.flush()
-out_test_file.close()
-if log: print("[csv] Created test dataset")
+    # Saving test dataset
+    writer = csv.writer(out_test_file)
+    writer.writerows(out_list[:test_data_size])
+    out_test_file.flush()
+    out_test_file.close()
+    if log: print("[csv] Created test dataset")
 
-# Making JSON files
-make_json_data(csv_testfilename, json_testfilename)
-if log: print("[json] Created test JSON file")
+    # Making JSON files
+    make_json_data(csv_testfilename, json_testfilename)
+    if log: print("[json] Created test JSON file")
 
-#make_json_data(csv_outfilename, json_filename)
-#if log: print("[json] Created complete JSON file")
+    #make_json_data(csv_outfilename, json_filename)
+    #if log: print("[json] Created complete JSON file")
 
-# Loading data from JSON into a graph and visualizing
-# G = nx.node_link_graph(json.load(open(json_testfilename, "r")))
+    # Loading data from JSON into a graph and visualizing
+    # G = nx.node_link_graph(json.load(open(json_testfilename, "r")))
 
 
-# g_pos = nx.spring_layout(G)
-# g_edge_labels = nx.get_edge_attributes(G, 'class')
-# nx.draw(G, pos = g_pos, node_size = 17)
-# nx.draw_networkx_edge_labels(G, pos = g_pos, edge_labels = g_edge_labels, font_size = 7)
+    # g_pos = nx.spring_layout(G)
+    # g_edge_labels = nx.get_edge_attributes(G, 'class')
+    # nx.draw(G, pos = g_pos, node_size = 17)
+    # nx.draw_networkx_edge_labels(G, pos = g_pos, edge_labels = g_edge_labels, font_size = 7)
 
-end_time = time.time()
-final_time = end_time - start_time
-if log: print("[debug] Runtime: %.2f seconds" % final_time)
+    end_time = time.time()
+    final_time = end_time - start_time
+    if log: print("[debug] Runtime: %.2f seconds" % final_time)
 
-#plt.show()
-#if log: print("[networkx] Generated graph with {} nodes and {} edges".format(len(G.nodes()), len(G.edges())))
+    #plt.show()
+    #if log: print("[networkx] Generated graph with {} nodes and {} edges".format(len(G.nodes()), len(G.edges())))
 
