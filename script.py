@@ -123,26 +123,10 @@ def build_road_type(shp_list):
     return dict_roadconst
 
 
-print("--- JSON and CSV file generator for the Force Directed Road Network project ---")
-print("--- Choose datafile: 1. Delhi | 2. Houston | 3. Seoul | 4. All")
-while 1:
-    choice = input()
-    try:
-        choice = int(choice)
-        if choice in range(1, 4):
-            run_script(choice)
-            break
-        elif choice == 4:
-            for i in range(1, 4):
-                run_script(i)
-            break
-        else:
-            print("(I) Invalid --- Choose datafile: 1. Delhi | 2. Houston | 3. Seoul")
-    except Exception as e:
-        print(e)
-        print("(E) Invalid --- Choose datafile: 1. Delhi | 2. Houston | 3. Seoul")
-
 def run_script(choice):
+    """
+    Primary function that extracts data from relevant dataset(s) and generates CSV and JSON files
+    """
     files_idx = choice - 1
     shp_filename = shp_filenames[files_idx]
     csv_infilename = csv_infilenames[files_idx]
@@ -234,3 +218,23 @@ def run_script(choice):
     #plt.show()
     #if log: print("[networkx] Generated graph with {} nodes and {} edges".format(len(G.nodes()), len(G.edges())))
 
+
+
+print("--- JSON and CSV file generator for the Force Directed Road Network project ---")
+print("--- Choose datafile: 1. Delhi | 2. Houston | 3. Seoul | 4. All")
+while 1:
+    choice = input()
+    try:
+        choice = int(choice)
+        if choice in range(1, 4):
+            run_script(choice)
+            break
+        elif choice == 4:
+            for i in range(1, 4):
+                run_script(i)
+            break
+        else:
+            print("(I) Invalid --- Choose datafile: 1. Delhi | 2. Houston | 3. Seoul")
+    except Exception as e:
+        print(e)
+        print("(E) Invalid --- Choose datafile: 1. Delhi | 2. Houston | 3. Seoul")
