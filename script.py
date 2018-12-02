@@ -88,7 +88,7 @@ def make_edge_data(entry):
     temp_dict['class'] = entry[6]
     temp_dict['type'] = entry[7]
     temp_dict['name'] = entry[8]
-    
+
     return temp_dict
 
 def build_road_class(shp_list):
@@ -132,6 +132,9 @@ def build_road_name(shp_list):
         if entry['properties']['OBJECTID'] not in dict_roadnames:
             if entry['properties']['name'] != "" and "?" not in entry['properties']['name']:
                 dict_roadnames[entry['properties']['OBJECTID']] = entry['properties']['name']
+            else:
+                dict_roadnames[entry['propperties']['OBJECTID']] = "NULL"
+                
     if log: print("[debug] Read {} edges for road names".format(len(dict_roadnames)))
     return dict_roadnames
 
@@ -177,7 +180,8 @@ def run_script(choice):
     out_list.append(next(csv_file))
     out_list[0].append('CLASS')
     out_list[0].append('TYPE')
-
+    out_list[0].append('NAME')
+    
     # Building list for new dataset
     for row in csv_file:
         object_id = int(row[4])     #Index depends on dataset schema
