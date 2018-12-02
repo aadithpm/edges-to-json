@@ -19,15 +19,15 @@ import time
 import matplotlib.pyplot as plt
 
 # Filenames; change here for different data
-shp_filename = "Delhi_Links.shp"
-csv_infilename = "Delhi_Edgelist.csv"
-csv_outfilename = "Delhi_Edgelist_Updated.csv"
-csv_testfilename = "Delhi_Edgelist_Test.csv"
-json_filename = "Delhi.json"
-json_testfilename = "Delhi_Test.json"
+shp_filenames = ["Delhi_Links.shp", "Houston_Links.shp", "Seoul_Links.shp"]
+csv_infilenames = ["Delhi_Edgelist.csv", "Houston_Edgelist.csv", "Seoul_Edgelist.csv"]
+csv_outfilenames = ["out_csv/Delhi_Edgelist_Updated.csv", "out_csv/Houston_Edgelist_Updated.csv", "out_csv/Seoul_Edgelist_Updated.csv"]
+csv_testfilenames = ["test_csv/Delhi_Edgelist_Test.csv", "test_csv/Houston_Edgelist_Test.csv", "test_csv/Seoul_Edgelist_Updated.csv"]
+json_filenames = ["json/Delhi.json", "json/Houston.json", "json/Seoul.json"]
+json_testfilenames = ["json_test/Delhi_Test.json", "json_test/Houston_Test.json", "json_test/Seoul_Test.json"]
 
 log = 1                         # Set this to 1 for logs else 0
-test_data_size = 2500            # Change this for test dataset size
+test_data_size = 2500           # Change this for test dataset size
 start_time = time.time()        # For timing the script
 
 def make_json_data(in_file, out_file):
@@ -123,6 +123,30 @@ def build_road_type(shp_list):
     return dict_roadconst
 
 
+print("--- JSON and CSV file generator for the Force Directed Road Network project ---")
+print("--- Choose datafile: 1. Delhi | 2. Houston | 3. Seoul")
+while 1:
+    choice = input()
+    try:
+        choice = int(input)
+        if choice in range(1, 4):
+            break
+        else:
+            print("Invalid --- Choose datafile: 1. Delhi | 2. Houston | 3. Seoul")
+    except:
+        print("Invalid --- Choose datafile: 1. Delhi | 2. Houston | 3. Seoul")
+
+files_idx = choice - 1
+shp_filename = shp_filenames[files_idx]
+csv_infilename = csv_infilenames[files_idx]
+csv_outfilename = csv_outfilenames[files_idx]
+csv_testfilename = csv_testfilenames[files_idx]
+json_testfilename = json_testfilenames[files_idx]
+json_filename = json_filenames[files_idx]
+
+print("Outputs:\nUpdated CSV: {}\nJSON test file: {}\n Full JSON file: {}\n".
+format(csv_outfilename, json_testfilename, json_filename))
+
 #
 shp_file = fiona.open(shp_filename)
 csv_file = csv.reader(open(csv_infilename, "r"))
@@ -188,20 +212,18 @@ if log: print("[json] Created test JSON file")
 #if log: print("[json] Created complete JSON file")
 
 # Loading data from JSON into a graph and visualizing
+# G = nx.node_link_graph(json.load(open(json_testfilename, "r")))
 
 
-G = nx.node_link_graph(json.load(open(json_testfilename, "r")))
-
-"""
-g_pos = nx.spring_layout(G)
-g_edge_labels = nx.get_edge_attributes(G, 'class')
-nx.draw(G, pos = g_pos, node_size = 17)
-nx.draw_networkx_edge_labels(G, pos = g_pos, edge_labels = g_edge_labels, font_size = 7)
-"""
+# g_pos = nx.spring_layout(G)
+# g_edge_labels = nx.get_edge_attributes(G, 'class')
+# nx.draw(G, pos = g_pos, node_size = 17)
+# nx.draw_networkx_edge_labels(G, pos = g_pos, edge_labels = g_edge_labels, font_size = 7)
 
 end_time = time.time()
 final_time = end_time - start_time
 if log: print("[debug] Runtime: %.2f seconds" % final_time)
+
 #plt.show()
-if log: print("[networkx] Generated graph with {} nodes and {} edges".format(len(G.nodes()), len(G.edges())))
+#if log: print("[networkx] Generated graph with {} nodes and {} edges".format(len(G.nodes()), len(G.edges())))
 
