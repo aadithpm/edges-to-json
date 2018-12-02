@@ -27,7 +27,7 @@ json_filename = "Delhi.json"
 json_testfilename = "Delhi_Test.json"
 
 log = 1                         # Set this to 1 for logs else 0
-test_data_size = 800            # Change this for test dataset size
+test_data_size = 2500            # Change this for test dataset size
 start_time = time.time()        # For timing the script
 
 def make_json_data(in_file, out_file):
