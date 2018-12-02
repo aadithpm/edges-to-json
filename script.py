@@ -126,12 +126,12 @@ def build_road_name(shp_list):
     """
     Takes an input of data in a list and returns a dictionary with values of street name for each unique entry
     """
-    dict_roadtypes = {}
+    dict_roadnames = {}
     for entry in shp_list:
-        if entry['properties']['OBJECTID'] not in dict_roadtypes:
+        if entry['properties']['OBJECTID'] not in dict_roadnames:
             if entry['properties']['name'] != "" and "?" not in entry['properties']['name']:
-                dict_roadtypes[entry['properties']['OBJECTID']] = entry['properties']['name']
-    if log: print("[debug] Read {} edges for road classification".format(len(dict_roadtypes)))
+                dict_roadnames[entry['properties']['OBJECTID']] = entry['properties']['name']
+    if log: print("[debug] Read {} edges for road names".format(len(dict_roadnames)))
     return dict_roadtypes
 
 def run_script(choice):
@@ -191,7 +191,7 @@ def run_script(choice):
 
         if object_id in dict_roadnames:
             out_entry.append(dict_roadnames[object_id])
-            
+
         out_list.append(out_entry)
     if log: print("[csv] Read and updated {} rows from datafile '{}'".format(len(out_list), csv_infilename))  
 
