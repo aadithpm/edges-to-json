@@ -19,12 +19,12 @@ import time
 import matplotlib.pyplot as plt
 
 # Filenames; change here for different data
-shp_filenames = ["Delhi/Delhi_Links.shp", "Houston/Houston_Links.shp", "Seoul/Seoul_Links.shp"]
-csv_infilenames = ["Delhi/Delhi_Edgelist.csv", "Houston/Houston_Edgelist.csv", "Seoul/Seoul_Edgelist.csv"]
-csv_outfilenames = ["out_csv/Delhi_Edgelist_Updated.csv", "out_csv/Houston_Edgelist_Updated.csv", "out_csv/Seoul_Edgelist_Updated.csv"]
-csv_testfilenames = ["test_csv/Delhi_Edgelist_Test.csv", "test_csv/Houston_Edgelist_Test.csv", "test_csv/Seoul_Edgelist_Updated.csv"]
-json_filenames = ["json/Delhi.json", "json/Houston.json", "json/Seoul.json"]
-json_testfilenames = ["json_test/Delhi_Test.json", "json_test/Houston_Test.json", "json_test/Seoul_Test.json"]
+shp_filenames = ["Delhi/Delhi_Links.shp", "Houston/Houston_Links.shp", "Chengdu/Chengdu_Links.shp"]
+csv_infilenames = ["Delhi/Delhi_Edgelist.csv", "Houston/Houston_Edgelist.csv", "Chengdu/Chengdu_Edgelist.csv"]
+csv_outfilenames = ["out_csv/Delhi_Edgelist_Updated.csv", "out_csv/Houston_Edgelist_Updated.csv", "out_csv/Chengdu_Edgelist_Updated.csv"]
+csv_testfilenames = ["test_csv/Delhi_Edgelist_Test.csv", "test_csv/Houston_Edgelist_Test.csv", "test_csv/Chengdu_Edgelist_Updated.csv"]
+json_filenames = ["json/Delhi.json", "json/Houston.json", "json/Chengdu.json"]
+json_testfilenames = ["json_test/Delhi_Test.json", "json_test/Houston_Test.json", "json_test/Chengdu_Test.json"]
 
 log = 1                         # Set this to 1 for logs else 0
 test_data_size = 2500           # Change this for test dataset size
@@ -221,7 +221,7 @@ def run_script(choice):
 
 
 print("--- JSON and CSV file generator for the Force Directed Road Network project ---")
-print("--- Choose datafile: 1. Delhi | 2. Houston | 3. Seoul | 4. All")
+print("--- Choose datafile: 1. Delhi | 2. Houston | 3. Chengdu | 4. All")
 while 1:
     choice = input()
     try:
@@ -234,7 +234,7 @@ while 1:
                 run_script(i)
             break
         else:
-            print("(I) Invalid --- Choose datafile: 1. Delhi | 2. Houston | 3. Seoul")
+            print("(I) Invalid --- Choose datafile: 1. Delhi | 2. Houston | 3. Chengdu | 4. All")
     except Exception as e:
         print(e)
-        print("(E) Invalid --- Choose datafile: 1. Delhi | 2. Houston | 3. Seoul")
+        print("(E) Invalid --- Choose datafile: 1. Delhi | 2. Houston | 3. Chengdu | 4. All")
