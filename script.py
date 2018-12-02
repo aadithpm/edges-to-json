@@ -158,18 +158,19 @@ def run_script(choice):
     #
     dict_roadtypes = {}
     dict_roadconst = {}
+    dict_roadnames = {}
     out_list = []
 
     # Convert file contents from iterator to list for easy access
     shp_list = list(shp_file)
     if log: print("[fiona] Read {} entries from shape file".format(len(shp_list)))
 
-    # Can optimise with same function, but it's preferable to store these values in separate dictionaries
-    #
     # Storing road classifications
     dict_roadtypes = build_road_class(shp_list)
     # Storing road types
     dict_roadconst = build_road_type(shp_list)
+    # Storing road names
+    dict_roadnames = build_road_name(shp_list)
 
     # Adding headers
     out_list.append(next(csv_file))
@@ -188,6 +189,9 @@ def run_script(choice):
         if object_id in dict_roadconst:
             out_entry.append(dict_roadconst[object_id])
 
+        if object_id in dict_roadnames:
+            out_entry.append(dict_roadnames[object_id])
+            
         out_list.append(out_entry)
     if log: print("[csv] Read and updated {} rows from datafile '{}'".format(len(out_list), csv_infilename))  
 
