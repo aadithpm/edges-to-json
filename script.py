@@ -84,7 +84,7 @@ def make_edge_data(entry):
     temp_dict['ycoord'] = float(entry[1])
     temp_dict['source'] = int(entry[2])
     temp_dict['target'] = int(entry[3])
-    temp_dict['length'] = float(entry[5])
+    temp_dict['weight'] = float(entry[5])
     temp_dict['class'] = entry[6]
     temp_dict['type'] = entry[7]
     temp_dict['name'] = entry[8]
