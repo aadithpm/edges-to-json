@@ -22,7 +22,7 @@ An additional script for CSUN's GISF2E tool to convert the generated CSV files i
 5. Increase range in line 250
 
 ###### A future version of the script will remove all these steps
-###### Note: if you don't have fiona or networkx, you can use ```pip install fiona networkx matplotlib``` in the terminal
+##### **Note:** if you don't have fiona or networkx, you can use ```pip install fiona networkx matplotlib``` in the terminal
 
 6. Run script.py (Python 3)
 ```
