@@ -33,6 +33,9 @@ python script.py
 
 **Optional:** Uncomment networkx code to prototype graph representation
 
+Finally, move the test JSON files or the JSON files to the web project folder and add those to the script. Alternatively, if you're lazy/just want to test it out, hardcode the data source.
+
+
 ***
 
 * Datasets taken from UIC's CSUN lab [[link]](https://csun.uic.edu/datasets.html)  [[download]](https://figshare.com/articles/Urban_Road_Network_Data/2061897)
