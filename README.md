@@ -8,7 +8,7 @@ An additional script for CSUN's GISF2E tool to convert the generated CSV files i
 
 **Additional Data:**
 
-1. Download data for the city you want (Credits to UIC's CSUN lab)[[link]](https://figshare.com/authors/Urban_Road_Networks/1263210)
+1. Download data for the city you want (Credits to UIC's CSUN lab) [[link]](https://figshare.com/authors/Urban_Road_Networks/1263210)
 2. Store in separate folder of choice;
 - I went with shapefiles, CSV files (the edgelist file is what matters) and all relevant files in a folder called "cityname"; **example:** *'Houston'* for the Houston dataset
 3. Add parameters to script.py
