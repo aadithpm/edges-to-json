@@ -33,7 +33,7 @@ python script.py
 
 **Optional:** Uncomment networkx code to prototype graph representation
 
-Finally, move the test JSON files or the JSON files to the web project folder and add those to the script. Alternatively, if you're lazy/just want to test it out, hardcode the data source.
+Finally, move the test JSON files or the JSON files to the web project [[link]](https://github.com/aadithpm/force-road) and add those to the *force.js* script. Alternatively, if you're lazy/just want to test it out, hardcode the data source.
 
 
 ***
